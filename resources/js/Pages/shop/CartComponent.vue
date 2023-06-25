@@ -197,7 +197,7 @@ export default {
             // Use Inertia to send the data to the Laravel backend
             this.$inertia
                 .post("/checkout", {
-                    customerName: this.$page.auth.user.name,
+
                 })
                 .then(() => {
                     // Handle the success response, if needed

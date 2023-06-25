@@ -21,10 +21,10 @@ class adminAuth
 
         //This will be excecuted if the new authentication fails.
         if ($isAuthenticatedAdmin){
-            if(Auth::guard('web')->user()->role == 1){
+            if(Auth::guard('web')->user()->is_admin == 1){
                 return $next($request);
             }
         }
-        return redirect()->route('admin.index')->with('message', 'Authentication Error.');
+        return redirect()->route('adminLoginShow')->with('message', 'Authentication Error.');
     }
 }

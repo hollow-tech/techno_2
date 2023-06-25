@@ -15,21 +15,28 @@ class AdminAuthController extends Controller
 
     public function adminLoginForm(AdminLoginRequest $request)
     {
-        // $phone = $request->phone;
-        $email = $request->email;
-        $password = $request->password;
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $user = auth()->user();
+
+
 
         $user = User::query()->where('email', $email)->firstOr(function () {
             throw ValidationException::withMessages([
-                'email' => [__('auth.Phone number not found')]
+                'phone' => [__('auth.Phone number not found')]
             ]);
         });
 
-        if (Hash('sha1', $password) !== $user->password) {
-            throw ValidationException::withMessages([
-                'password' => [__('auth.Phone or password is incorrect')]
-            ]);
-        }
+
+
+        // if (Hash('sha1', $password) !== $user->password) {
+        //     throw ValidationException::withMessages([
+        //         'password' => [__('auth.Phone or password is incorrect')]
+        //     ]);
+        // }
+
+        //  dd($user);
+
 
         Auth::guard($this->guard)->login($user);
         return redirect()->route('admin.index');

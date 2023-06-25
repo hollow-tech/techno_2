@@ -15,15 +15,14 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-<!--    <link rel="shortcut icon" href="{{ asset('favicon.png')}}" type="image/x-icon">-->
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-v5.min.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/bootstrap-v5.min.js')}}"></script>
+    {{-- <script src="{{ asset('js/bootstrap-v5.min.js')}}"></script>
     <script src="{{ asset('js/jquery.min.js')}}"></script>
-    <script src="{{ asset('js/jquery.mask.min.js')}}"></script>
+    <script src="{{ asset('js/jquery.mask.min.js')}}"></script> --}}
 </head>
 
 <body>
@@ -87,16 +86,6 @@
     </div>
 
     <script>
-        //PHOME MASK JQUERY Erdaulet
-        $(".phone_mask").mask("+7(000) 000-00-00");
-        $(".phone_mask").on('focus', function(){
-            if($(this).val()=='')
-                $(this).val('+7(');
-        })
-        $(".phone_mask").on('focusout', function(){
-            if($(this).val()=='+7(')
-                $(this).val('');
-        })
     </script>
 </body>
 

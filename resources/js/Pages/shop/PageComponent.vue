@@ -184,6 +184,7 @@
                     <form @submit.prevent="submitForm" method="POST">
                         <input type="hidden" name="_token" :value="csrfToken" />
                         <input type="hidden" name="id" v-model="product.id" />
+                        <input type="hidden" name="product_id" v-model="product.id" />
                         <input
                             type="hidden"
                             name="title"
@@ -254,6 +255,7 @@ export default {
                 .post("/cart", {
                     _token: this.csrfToken,
                     id: this.product.id,
+                    product_id: this.product.id,
                     title: this.product.title,
                     price: this.product.price,
                     discount: this.product.discount,

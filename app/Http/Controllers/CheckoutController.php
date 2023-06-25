@@ -3,50 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\Cart;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
+
     public function checkout(Request $request)
-    {
-        // Retrieve the authenticated user if available
-        $user = Auth::user();
+{
+    // Retrieve cart items from the request
+    $cartItems = CartItem::all();
+    $user = Auth::user();
 
-        // Retrieve the cart items
-        $cartItems = Cart::all();
+    foreach ($cartItems as $cartItem) {
+        // Check if an order already exists for the current product
+        $existingOrder = Order::where('user_id', $user->id)
+            ->where('orderId', $cartItem->product_id)
+            ->first();
 
-        // Validate the cart items (You can add your own validation logic here)
-
-        // Create a new order
-        $order = new Order();
-
-        if ($user) {
-            // If the user is authenticated, use the user's information
-            $order->customerName = $user->name;
+        if ($existingOrder) {
+            // Update existing order's quantity and total price
+            $existingOrder->quantity += $cartItem->quantity;
+            $existingOrder->totalPrice += $cartItem->price;
+            $existingOrder->save();
         } else {
-            // If the user is not authenticated, use the provided customer name
-            $order->customerName = $request->input('customerName');
+            // Create a new order
+            $order = new Order();
+            $order->user_id = $user->id;
+            $order->orderId = $cartItem->product_id;
+            $order->customerName = $user->name;
+            $order->productName = $cartItem->title;
+            $order->quantity = $cartItem->quantity;
+            $order->totalPrice = $cartItem->price;
+            $order->save();
         }
-
-        foreach ($cartItems as $cartItem) {
-            // Populate the order fields from cart items
-            $orderItem = [
-                'product' => $cartItem->title,
-                'quantity' => $cartItem->quantity,
-                'totalPrice' => $cartItem->price,
-            ];
-
-            $order->items()->create($orderItem);
-        }
-
-        // Save the order
-        $order->save();
-
-        // Optionally, update the cart (Remove items or mark them as ordered)
-
-        // Provide feedback or redirection
-        return response()->json(['message' => 'Order placed successfully']);
     }
+
+    // Optionally, you can return a response or redirect the user
+    return response()->json(['message' => 'Order created successfully']);
+}
 }

@@ -17,11 +17,11 @@ public function up()
         $table->id();
         $table->string('orderId');
         $table->string('customerName');
-        $table->string('product');
+        $table->string('productName');
         $table->integer('quantity');
         $table->decimal('totalPrice', 8, 3);
-        $table->unsignedBigInteger('cart_id');
-        $table->foreign('cart_id')->references('id')->on('cart_items')->onDelete('cascade');
+        $table->unsignedBigInteger('user_id');
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         $table->timestamps();
     });
 }

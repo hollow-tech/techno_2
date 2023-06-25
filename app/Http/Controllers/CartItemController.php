@@ -16,6 +16,7 @@ class CartItemController extends Controller
   public function addToCart(Request $request)
 {
     $id = $request->input('id');
+    $product_id = $request->input('product_id');
     $title = $request->input('title');
     $price = $request->input('price');
     $discount = $request->input('discount');
@@ -33,6 +34,7 @@ class CartItemController extends Controller
         // If the item doesn't exist, create a new cart item
         $cartItem = new CartItem;
         $cartItem->id = $id;
+        $cartItem->product_id = $product_id;
         $cartItem->title = $title;
         $cartItem->quantity = $quantity;
         $cartItem->price = $price; // Set the initial price here
