@@ -62,15 +62,21 @@ Route::post('/checkout',[CheckoutController::class, 'checkout'])->name('checkout
 
 
 
+
+Route::get('/bslider', [ProductController::class, 'home'])->name('products');
+
+
+
 // sliders
 
 
 Route::get('/slider', function () {
     return Inertia::render('slider');
 });
-Route::get('/bslider', function () {
-    return Inertia::render('blockSlider');
-});
+
+
+
+
 
 
 

@@ -60,7 +60,7 @@
                                                 deleteForm(item.id)
                                             "
                                             method="DELETE"
-                                            v-if="item.quantity === 1"
+                                            v-if="item.quantity < 2"
                                         >
                                             <button
                                                 class="cart__delete"
@@ -112,27 +112,36 @@
                     </div>
                 </div>
 
-                <div v-for="item in cartItems" :key="item.id">
-                    <form @submit.prevent="checkoutForm" method="POST">
-                        <input
-                            type="hidden"
-                            name="title"
-                            v-model="item.title"
-                        />
-                        <input
-                            type="hidden"
-                            name="quantity"
-                            v-model="item.quantity"
-                        />
-                        <input
-                            type="hidden"
-                            name="price"
-                            v-model="formattedTotalPrice"
-                        />
-                        <button class="aside__btn" type="submit">
-                            Оформить заказ
-                        </button>
-                    </form>
+                <div>
+                    <div v-for="item in cartItems" :key="item.id">
+                        <form
+                            @submit.prevent="checkoutForm(item)"
+                            method="POST"
+                        >
+                            <input
+                                type="hidden"
+                                name="title"
+                                :value="item.title"
+                            />
+                            <input
+                                type="hidden"
+                                name="quantity"
+                                :value="item.quantity"
+                            />
+                            <input
+                                type="hidden"
+                                name="price"
+                                :value="formattedTotalPrice"
+                            />
+                            <button
+                                v-if="item.isFirst"
+                                class="aside__btn"
+                                type="submit"
+                            >
+                                Оформить заказ
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="aside__inform">
@@ -193,12 +202,10 @@ export default {
                     console.log(error);
                 });
         },
-        checkoutForm() {
+        checkoutForm(item) {
             // Use Inertia to send the data to the Laravel backend
             this.$inertia
-                .post("/checkout", {
-
-                })
+                .post("/checkout", {})
                 .then(() => {
                     // Handle the success response, if needed
                 })
@@ -207,6 +214,11 @@ export default {
                     console.error(error);
                 });
         },
+    },
+    mounted() {
+        this.cartItems.forEach((item, index) => {
+            item.isFirst = index === 0;
+        });
     },
 };
 </script>
@@ -219,6 +231,7 @@ a {
     padding: 50px 0;
 }
 .cart__container {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }

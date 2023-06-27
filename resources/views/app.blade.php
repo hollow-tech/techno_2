@@ -17,6 +17,8 @@
     <link href="{{ asset('css/shop.css') }}" rel="stylesheet" />
 
 
+
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @routes
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -26,6 +28,7 @@
     <script type="text/javascript" src="{{ asset('js/adminlte.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/sweetalert.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+
     @vite('resources/sass/app.scss')
     @routes
     @inertiaHead

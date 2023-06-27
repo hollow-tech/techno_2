@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->string('title');
             $table->integer('quantity');
             $table->decimal('price', 8, 3);

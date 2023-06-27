@@ -2,10 +2,13 @@
     <HeaderComponent />
     <main class="main">
         <div class="main__container">
-            <!-- <section class="main-sliders">
+            <section class="main-sliders">
                 <sliderVue class="bslider-main" />
-                <blockSliderVue class="aside-slider"></blockSliderVue>
-            </section> -->
+                <blockSliderVue
+                    class="aside-slider__wrapper"
+                    :data-to-send="receivedData"
+                ></blockSliderVue>
+            </section>
 
             <div class="main-categories categories-btns">
                 <div class="main-categories__btns categories-btns">
@@ -272,10 +275,15 @@ export default {
             required: true,
         },
     },
+    data() {
+        return {
+            receivedData: this.products,
+        };
+    },
 
     methods: {
         getImageUrl(image) {
-            return `../../../../public/adminlte/dist/img/images/${image}`;
+            return `/adminlte/dist/img/images/${image}`;
         },
     },
 };
@@ -304,10 +312,11 @@ a {
     height: 100%;
 }
 
-.aside-slider {
+.aside-slider__wrapper {
     width: 30%;
     height: 100%;
 }
+
 /* aside-slider */
 
 .product {

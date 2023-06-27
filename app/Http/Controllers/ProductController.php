@@ -64,9 +64,11 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function sliderShow(Product $product)
     {
-        //
+        $products = Product::all();
+
+        return ['products' => $products];
     }
 
     /**

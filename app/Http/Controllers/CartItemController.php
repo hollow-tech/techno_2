@@ -22,6 +22,7 @@ class CartItemController extends Controller
     $discount = $request->input('discount');
     $image = $request->input('image');
     $quantity = 1; // Assuming the quantity is always 1 in this case
+    $user = $request->user();
 
     // Check if the item already exists in the cart
     $cartItem = CartItem::where('id', $id)->first();
@@ -40,6 +41,7 @@ class CartItemController extends Controller
         $cartItem->price = $price; // Set the initial price here
         $cartItem->discount = $discount;
         $cartItem->image = $image;
+        $cartItem->user_id = $user->id;
 
         $cartItem->save();
     }
